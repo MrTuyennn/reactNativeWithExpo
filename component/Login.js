@@ -42,6 +42,7 @@ export default class Login extends Component{
         const { email, password } = this.state;
         firebaseConfig.auth().signInWithEmailAndPassword(email, password)
           .then((user) => {
+              console.log(email);
             // If you need to do anything with the user, do it here
             this.props.navigation.navigate('Home', {
               email: email,
@@ -64,13 +65,13 @@ export default class Login extends Component{
         <SafeAreaView  style={styles.container}>
             {/* StatusBar áp cho điện thoại tai thỏ hiển thị pin */}
             <StatusBar barStyle='light-content'></StatusBar>
-            <KeyboardAvoidingView behavior='padding' style={styles.container} onPress={Keyboard.dismiss}>
+            {/* <KeyboardAvoidingView behavior='padding' style={styles.container} onPress={Keyboard.dismiss}> */}
             <View style={styles.container}>
             <View style={styles.container}>
               <View style={styles.bacground_container}>
                 <Image style={styles.image} source={require('../image/shopping.png')}></Image>
                 <Text style={styles.title}>LMSUNNY</Text>
-                <Text style={styles.title_if}> Acoount Information</Text>
+              
               </View>
              <View style={styles.InfroContainer}>
                  <TextInput style={styles.input}
@@ -105,15 +106,14 @@ export default class Login extends Component{
              </View>
            </View>
            </View>
-            </KeyboardAvoidingView>
+            {/* </KeyboardAvoidingView> */}
             <ProgressDialog
           title="Loading"
           activityIndicatorColor="blue"
           activityIndicatorSize="large"
           animationType="fade"
           message="Please, wait..."
-          visible={this.state.showProgress}
-        />
+          visible={this.state.showProgress}/>
         </SafeAreaView>
          
         );
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
        
     },
     bacground_container:{
-        marginTop:130,
+        marginTop:100,
         alignItems:'center',
         flex:1,
     },
@@ -149,6 +149,7 @@ const styles = StyleSheet.create({
         left:0,
         right:0,
         bottom:0,
+        marginBottom:10,
         height:350,
         padding:25,
         // backgroundColor:'white',  
@@ -156,12 +157,14 @@ const styles = StyleSheet.create({
     input:{
         color:'white',
         height:40,
+        borderRadius:10,
         // khoảng cách trái phải
         paddingHorizontal:10,
         marginBottom:20,
         backgroundColor:'rgba(255,255,255,0.2)'
     },
     buttonContainer:{
+        borderRadius:10,
         marginVertical:10,
         backgroundColor:'#f7c744',
         paddingVertical:10,

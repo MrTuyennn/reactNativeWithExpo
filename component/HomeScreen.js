@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, FlatList, ToastAndroid, Image, TouchableWithoutFeedback } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { FAB, Button } from 'react-native-paper';
+import { FAB } from 'react-native-paper';
+import { Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Dialog from 'react-native-dialog';
 import { icon } from 'react-native-vector-icons';
 import firebaseConfig from '../firebase/firebase';
@@ -69,10 +71,11 @@ export default class HomeScreen extends Component {
                     <FlatList data={this.state.post} renderItem={({ item }) =>
                         <TouchableWithoutFeedback onPress={() => navigation.navigate("Infor", { keyfirebase: item.key })}>
                             <View style={{ flex: 1, flexDirection: 'column', }}>
-                                <View style={styles.view}>
-                                    <Image
-                                        source={require('../image/coding.png')}
-                                        style={{ width: 100, height: 100, margin: 5 }}>
+                            <View style={styles.cardview}>
+                                <View style={styles.view}>                             
+                                  <Image
+                                        source={require('../image/acer.png')}
+                                        style={{ width: 100, height: 100, margin: 10 }}>
                                     </Image>
                                     <View style={{ flex: 1, flexDirection: 'column' }}>
                                         <Text style={styles.itemm}>Mã Sản Phẩm : {item.textKey}</Text>
@@ -80,9 +83,12 @@ export default class HomeScreen extends Component {
                                         <Text style={styles.itemm}>Gía Sản Phẩm : {item.numberGia}</Text>
                                         <Text style={styles.itemm}>Mô tả Sản Phẩm : {item.textMota}</Text>
                                     </View>
-                                    <Button style={styles.styleButton} mode="contained" onPress={this.showDialogDelete}>Xóa</Button>
+                                    <Button 
+                                      title="Xóa"
+                                      type="outline"
+                                      style={{marginTop: 10,height:100}}  onPress={this.showDialogDelete}></Button>
                                 </View>
-                                <View style={{ height: 1, backgroundColor: 'black', }}></View>
+                                
                                 <View>
                                     <Dialog.Container visible={this.state.dialogVisibleDlete}>
                                         <Dialog.Description>
@@ -91,7 +97,7 @@ export default class HomeScreen extends Component {
                                         <Dialog.Button label="Xóa" onPress={() => this.deleteItem(item.key)} />
                                         <Dialog.Button label="Trở Về" onPress={this.handleCancelDelete} />
                                     </Dialog.Container>
-
+                                  </View>
                                 </View>
                             </View>
 
@@ -122,9 +128,25 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
     },
+    cardview:{
+        flex: 1,
+        height: 150,
+        width: 465,
+        margin:10,
+        borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        
+        elevation: 2,
+    },
     itemm: {
-        fontSize: 18,
-        backgroundColor: '#c6ffb3',
+        fontSize: 12,
+        margin:5,
     },
     fab: {
         position: 'absolute',
@@ -132,10 +154,5 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
-    styleButton: {
-        height: 50,
-        width: 10,
-        backgroundColor: 'black',
-        margin: 30,
-    },
+    
 })

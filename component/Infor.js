@@ -58,20 +58,15 @@ export default class Infor extends Component {
         this.setState({ dialogVisible: false });
 
     };
-  
-
-
     render() {
-        // console.log(JSON.stringify(textKey));
+        
         const { navigation} = this.props;
        
         return (
         <ScrollView>
                 <FlatList data={this.state.post} renderItem={({ item }) =>
                 <View style={styles.container}>
-                <View style={{ alignItems: 'center' }}>
-                    <Image style={styles.styleImage} source={require('../image/coding.png')}></Image>
-                </View>
+                
                 <View elevation={5} style={styles.styleCard}>
                     <Text style={styles.styleText}> Mã Sản Phẩm : {item.textKey}
                     
@@ -138,7 +133,7 @@ const styles = StyleSheet.create({
         backgroundColor:'black',
         borderRadius:9,
         padding:20,
-        backgroundColor:'#d9d9d9',
+        backgroundColor:'white',
         shadowColor: "#000000",
         shadowOpacity: 0.8,
         shadowRadius: 2,

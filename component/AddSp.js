@@ -113,20 +113,11 @@ export default class AddSp extends Component {
       }
     render() {
         let { image } = this.state;
+        const { navigation} = this.props;
 
         return (
             <View style={{flex: 1, flexDirection: 'column',alignItems: 'center'}}>
-                <View style={{ alignItems: 'center' }}>
-                    <Image
-                     value={this.state.image}
-                        onChangeText={image => this.setState({ image })}
-                    source={{ uri: image }}
-                        style={{height: 200, width: 200}}></Image>
-                </View>
-                <View style={{alignItems: 'center',flexDirection: 'row'}}>
-                    <Button onPress={this._pickImage}  color="black" style={{ height: 50, width: 200 }} icon="camera" mode="Outlined ">Take Photo</Button>
-                    <Button onPress={this._TakeImage} color="black" style={{ height: 50, width: 200 }} icon="camera" mode="Outlined ">Gallery photo</Button>
-                </View>
+                
                 <View style={{flexDirection: 'column',height: 100, width: '100%', padding: 20}}>
                     <TextInput style={{paddingTop: 10,}}
                         label='Nhập Mã Sản Phẩm'
@@ -151,7 +142,7 @@ export default class AddSp extends Component {
                         onChangeText={textMota => this.setState({ textMota })}/>
                     <View style={{alignItems:'center',flexDirection:'column',paddingVertical:20}}>
                     <Button onPress={this._Check.bind(this,this.state.tetxKey,this.state.tetxTenSp,this.state.numberGia,this.state.textMota)} color="white" style={{ height: 50, width: 200,backgroundColor:'black' }}  mode="Contained ">Thêm Sản Phẩm/></Button>
-                    <Button color="white" style={{ height: 50, width: 200,backgroundColor:'black',marginTop:20 }}  mode="Contained ">Trở về</Button>
+                    <Button color="white" style={{ height: 50, width: 200,backgroundColor:'black',marginTop:20 }}  mode="Contained " onPress={() => { navigation.navigate('Home') }}>Trở về</Button>
                     </View>
                 </View>  
             </View>

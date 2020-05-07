@@ -23,6 +23,7 @@ export default class Registration extends Component {
         this.setState({showProgress :kt});
     }
     getData=(email,cofin)=>{
+        console.log('dk ne');
         if(email != '' && cofin != '' && this.state.password != ''){
             if(cofin === this.state.password){
                 this.setState({
@@ -42,13 +43,16 @@ export default class Registration extends Component {
     }
     
   onRegister = () => {
+      console.log('dk nua ne');
     const { email, cofin } = this.state;
+    console.log(email)
     firebaseConfig.auth().createUserWithEmailAndPassword(email, cofin)
       .then((user) => {
         // If you need to do anything with the user, do it here
         // The user will be logged in automatically by the
         // `onAuthStateChanged` listener we set up in App.js earlier
-          ToastAndroid.show('Đăng kí thành công!', ToastAndroid.SHORT);
+        console.log(user);  
+        ToastAndroid.show('Đăng kí thành công!', ToastAndroid.SHORT);
           this.openProgress(false),
           this.props.navigation.navigate('Login')
       })
@@ -57,7 +61,7 @@ export default class Registration extends Component {
         // For details of error codes, see the docs
         // The message contains the default Firebase string
         // representation of the error
-        this.openProgress(true);
+        this.openProgress(false);
        Alert.alert('Lỗi! ', 'Vui lòng thử lại',[],{ cancelable: true })
   
       });
@@ -70,12 +74,12 @@ export default class Registration extends Component {
             <SafeAreaView style={styles.container}>
                 {/* StatusBar áp cho điện thoại tai thỏ hiển thị pin */}
                 <StatusBar barStyle='light-content'></StatusBar>
-                <KeyboardAvoidingView behavior='padding' style={styles.container} onPress={Keyboard.dismiss}>
+               
                     <View style={styles.container}>
                         <View style={styles.container}>
                             <View style={styles.bacground_container}>
                                 <Text style={styles.title}>LMSUNNY</Text>
-                                <Text style={styles.title_if}> Acoount Registration</Text>
+                               
                             </View>
                         </View>
                         <View style={styles.InfroContainer}>
@@ -115,7 +119,7 @@ export default class Registration extends Component {
                         </View>
                         
                     </View>
-                </KeyboardAvoidingView>
+               
                 <ProgressDialog
             title="Loading"
             activityIndicatorColor="blue"
@@ -139,14 +143,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     bacground_container: {
-        marginTop: 50,
+        marginTop: 20,
         alignItems: 'center',
         flex: 1,
     },
     title: {
         textAlign: 'center',
         fontSize: 35,
-        marginTop:30,
         color: '#EC4D37',
     },
     title_if: {
@@ -161,10 +164,11 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         bottom: 0,
-        height: 300,
+        height: 280,
         padding: 20,
     },
     input: {
+        borderRadius:10,
         color: 'white',
         height: 40,
         // khoảng cách trái phải
@@ -176,6 +180,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         backgroundColor: '#f7c744',
         paddingVertical: 10,
+        borderRadius:10,
 
     },
     btntext: {
