@@ -1,36 +1,37 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Image,ScrollView,FlatList } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, FlatList,TextInput,TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
 import Dialog from 'react-native-dialog';
 import firebase from '../firebase/firebase';
 export default class Infor extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state ={
+        this.state = {
             dialogVisible: false,
-            dialogVisibleDlete:false,
-            textKey:'',
+            dialogVisibleDlete: false,
             key: this.props.navigation.state.params.keyfirebase,
-            textSp:'',
-            textMota:'',
-            numberGia:'',
+            textKey: this.props.navigation.state.params.textKey,
+            textTenSp : this.props.navigation.state.params.textTenSp,
+            textMota: this.props.navigation.state.params.textMota,
+            numberGia: this.props.navigation.state.params.numberGia,
+            
         };
     }
-    
+
     showDialog = () => {
-        this.setState({ dialogVisible: true });
-      };
-   
-     
-      handleCancel = () => {
+        this.setState({
+            dialogVisible: true,         
+        });
+    };
+    handleCancel = () => {
         this.setState({ dialogVisible: false });
-      };
-      
-      componentDidMount(){
-          console.log(this.state.key)
-          this.getData();
-      } 
-      getData(){
+    };
+
+    componentDidMount() {
+        console.log(this.state.key)
+        this.getData();
+    }
+    getData() {
         var recentPostsRef = firebase.database().ref().child('sanPham').child(this.state.key);
         recentPostsRef.on('value', (snapshot) => {
             var array = [];
@@ -46,118 +47,135 @@ export default class Infor extends Component {
             })
 
         })
-      }
-      handleDialogUpdate(key) {
+    }
+    handleDialogUpdate(key) {
         firebase.database().ref().child("sanPham").child(key).set({
             textKey: this.state.textKey,
             textTenSp: this.state.textTenSp,
             numberGia: this.state.numberGia,
-            textMota:this.state.textMota,
+            textMota: this.state.textMota,
         });
 
         this.setState({ dialogVisible: false });
 
     };
     render() {
-        
-        const { navigation} = this.props;
-       
+
+        const { navigation } = this.props;
+     
         return (
-        <ScrollView>
-                <FlatList data={this.state.post} renderItem={({ item }) =>
-                <View style={styles.container}>
+            <View style={styles.container}>
+                <View style={styles.styleCard}>
+                    <View style={{ flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.customText}>Mã Sản Phẩm</Text>
+                        <Text>{this.state.textKey}</Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.customText}>Tên Sản Phẩm</Text>
+                        <Text>{this.state.textTenSp}</Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.customText}>Giá Sản Phẩm</Text>
+                        <Text>{this.state.numberGia}</Text>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'column'}}>
+                        <Text style={styles.customText}>Mô Tả Sản Phẩm</Text>
+                        <Text>{this.state.textMota}</Text>
+                    </View>
+                </View>
+                <View style={{ flex: 1, flexDirection: 'row',margin: 50}}>
+                    <TouchableOpacity style={styles.Button} onPress={this.showDialog}>
+                    <Text>Cập Nhập</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.Button} onPress={() => { navigation.navigate('Home') }}>
+                    <Text>Trở Về</Text>
+                    </TouchableOpacity>
+                </View>
                 
-                <View elevation={5} style={styles.styleCard}>
-                    <Text style={styles.styleText}> Mã Sản Phẩm : {item.textKey}
-                    
-                    </Text>
-                    
-                    <Text style={styles.styleText}> Tên Sản Phẩm : {item.textTenSp}</Text>
-                    <Text style={styles.styleText}> Giá Sản Phẩm :{item.numberGia}</Text>
-                    <Text style={styles.styleText}> Mô Tả Sản Phẩm:{item.textMota}</Text>
-                </View>
-                <View style={styles.styleViewButun}>
-                    <Button style={styles.styleButton} mode="contained" onPress={this.showDialog}>Cập Nhập</Button>
-                    <Button style={styles.styleButton} mode="contained" onPress={() => { navigation.navigate('Home') }}>Trở Về</Button>
-                </View>
-                <View>
-                    <Dialog.Container visible={this.state.dialogVisible}>
-                    <Dialog.Title>Cập Nhập Sản Phẩm</Dialog.Title>
-                    <Dialog.Input
-                     value={this.state.textKey}
-                     onChangeText={textKey => this.setState({ textKey })}
-                    label="Nhập Mã Sản Phẩm"></Dialog.Input>
-                    <Dialog.Input
-                     value={this.state.textTenSp}
-                     onChangeText={textTenSp => this.setState({ textTenSp })}
-                    label="Nhập Tên Sản Phẩm"></Dialog.Input>
-                    <Dialog.Input
-                     value={this.state.numberGia}
-                     onChangeText={numberGia => this.setState({ numberGia })}
-                    label="Nhập Giá Sản Phẩm"></Dialog.Input>
-                    <Dialog.Input
-                     value={this.state.textMota}
-                     onChangeText={textMota => this.setState({ textMota })}
-                    label="Mô tả Sản Phẩm"></Dialog.Input>
-                    <Dialog.Button label="Cập Nhập" onPress={() =>this.handleDialogUpdate(this.state.key)} />
-                    <Dialog.Button label="Trở Về" onPress={this.handleCancel} />
-                    </Dialog.Container>
-                </View>       
+                <Dialog.Container visible={this.state.dialogVisible}>
+                   <View style={{ flex: 1, flexDirection: 'column',height:300}}>
+                       <Text style={{color: 'red',fontWeight: 'bold',fontSize:20,marginVertical:20}}>Cập Nhập Thông Tin Sản Phẩm</Text>
+                       <Text style={styles.txtDialog}>Mã Sản Phẩm :</Text>
+                       <TextInput  onChangeText={textKey => this.setState({ textKey })}>
+                           {this.state.textKey}
+                          
+                       </TextInput>
+                       <Text style={styles.txtDialog}>Tên Sản Phẩm :</Text>
+                       <TextInput onChangeText={textTenSp => this.setState({ textTenSp })}>
+                           {this.state.textTenSp}
+                           
+                       </TextInput>
+                       <Text style={styles.txtDialog}>Giá Sản Phẩm :</Text>
+                       <TextInput  onChangeText={numberGia => this.setState({ numberGia })}>
+                           {this.state.numberGia}
+                          
+                       </TextInput>
+                       <Text style={styles.txtDialog}>Mô Tả Sản Phẩm :</Text>
+                       <TextInput onChangeText={textMota => this.setState({ textMota })}>
+                           {this.state.textMota}
+                           
+                       </TextInput>
+                       <View style={{ flex: 1, flexDirection: 'row'}}>
+                           <TouchableOpacity style={styles.Button} onPress={() =>this.handleDialogUpdate(this.state.key)}>
+                               <Text>Cập Nhập</Text>
+                           </TouchableOpacity>
+                           <TouchableOpacity style={styles.Button} onPress={this.handleCancel}>
+                               <Text>Trở Về</Text>
+                           </TouchableOpacity>
+                       </View>
+                   </View>
+                </Dialog.Container>
             </View>
-                 }> </FlatList>
 
-
-        </ScrollView>
-            
-            
         )
+
+        
+    
     }
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
     },
-    styleImage: {
-        height: 200,
-        width: 200,
-        marginTop: 10,
-    },
     styleCard: {
         height: 400,
         width: 390,
-        marginLeft: 50,
-        marginTop: 30,
-        backgroundColor:'black',
-        borderRadius:9,
-        padding:20,
-        backgroundColor:'white',
+        marginLeft:50,
+        marginTop:30,
+        backgroundColor: 'black',
+        borderRadius: 9,
+        padding: 20,
+        backgroundColor: 'white',
         shadowColor: "#000000",
         shadowOpacity: 0.8,
         shadowRadius: 2,
         shadowOffset: {
-        height: 1,
-        width: 1
+            height: 1,
+            width: 1
         }
     },
-    styleText:{
-        fontSize:18,
-        color:'black',
-        margin:20,
-        padding:10,
-
+    customText: {
+        color: "red",
+        fontSize:20,
+        fontWeight: "bold",
     },
-    styleViewButun:{
-       flex:1,
-       flexDirection:'row',
-       alignItems:'center',
-       justifyContent:'center'
+    Button:{
+        height:50, 
+        width:100, 
+        margin:50,
+        backgroundColor: "red",
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 9,
+        borderWidth:1,
     },
-    styleButton:{
-        height:50,
-        width:150,
-        backgroundColor:'black',
-        margin:30,   
-    },
+    txtDialog:{
+        fontSize:20,
+        marginVertical:20,
+        fontWeight: 'bold',
+    }
+    
 
 })

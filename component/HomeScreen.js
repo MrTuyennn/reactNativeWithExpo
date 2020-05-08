@@ -66,7 +66,7 @@ export default class HomeScreen extends Component {
             <View style={styles.container}>
                 <View>
                     <FlatList data={this.state.post} renderItem={({ item }) =>
-                        <TouchableWithoutFeedback onPress={() => navigation.navigate("Infor", { keyfirebase: item.key })}>
+                        <TouchableWithoutFeedback onPress={() => navigation.navigate("Infor", { keyfirebase: item.key, textKey: item.textKey,textTenSp:item.textTenSp,numberGia:item.numberGia,textMota:item.textMota  })}>
                             <View style={{ flex: 1, flexDirection: 'column', }}>
                             <View style={styles.cardview}>
                                 <View style={styles.view}>                             
