@@ -102,9 +102,7 @@ export default class Infor extends Component {
                     <Dialog.Button label="Cập Nhập" onPress={() =>this.handleDialogUpdate(this.state.key)} />
                     <Dialog.Button label="Trở Về" onPress={this.handleCancel} />
                     </Dialog.Container>
-                </View>
-               
-                
+                </View>       
             </View>
                  }> </FlatList>
 

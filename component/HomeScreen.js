@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, FlatList, ToastAndroid, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, FlatList, ToastAndroid, Image, TouchableWithoutFeedback,TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { FAB } from 'react-native-paper';
-import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Dialog from 'react-native-dialog';
 import { icon } from 'react-native-vector-icons';
@@ -51,8 +50,6 @@ export default class HomeScreen extends Component {
         })
     }
     deleteItem(key) {
-
-
         firebaseConfig.database().ref().child('sanPham').child(key).remove();
         this.setState({ dialogVisibleDlete: false });
 
@@ -83,10 +80,10 @@ export default class HomeScreen extends Component {
                                         <Text style={styles.itemm}>Gía Sản Phẩm : {item.numberGia}</Text>
                                         <Text style={styles.itemm}>Mô tả Sản Phẩm : {item.textMota}</Text>
                                     </View>
-                                    <Button 
-                                      title="Xóa"
-                                      type="outline"
-                                      style={{marginTop: 10,height:100}}  onPress={this.showDialogDelete}></Button>
+                                    <TouchableOpacity                                  
+                                      style={styles.button}  onPress={this.showDialogDelete}>
+                                           <Text>Delete</Text> 
+                                      </TouchableOpacity>
                                 </View>
                                 
                                 <View>
@@ -147,6 +144,26 @@ const styles = StyleSheet.create({
     itemm: {
         fontSize: 12,
         margin:5,
+    },
+    button:{
+        backgroundColor: 'white',
+        height:50,
+        width:100,
+        alignItems: "center",
+        backgroundColor: "#DDDDDD",
+        padding: 10,
+        marginHorizontal:10, 
+        marginVertical:50,
+        borderRadius:10,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
+        
+        elevation: 2,
     },
     fab: {
         position: 'absolute',
