@@ -102,8 +102,7 @@ export default class AddSp extends Component {
       // }
       //ghi dữ liệu
       _writeUserData=()=>{
-        firebase.database().ref('sanPham').push({
-           
+        firebase.database().ref('sanPham').push({          
              textKey:this.state.textKey,
              textTenSp:this.state.textTenSp,
              numberGia:this.state.numberGia,
